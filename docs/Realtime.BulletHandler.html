@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Realtime.BulletHandler</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <div class="breadcrumbs">realtime v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Realtime.html">Realtime</a> &rarr; <a href="Realtime.BulletHandler.html">BulletHandler</a></div>
+
+      <h1>
+        Realtime.BulletHandler
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+          <li><a href="#types_details">Types</a></li>
+        
+      </ul>
+
+      
+        <div id="moduledoc" class="docstring">
+          <h1>Implements callbacks needed by bullet handler used in cowboy.</h1>
+<p><a href="#init/4"><code class="inline">init/4</code></a> and <a href="#terminate/2"><code class="inline">terminate/2</code></a> functions are called everytime a connection 
+is made or closed, respectively, which can happen many times over 
+the course of a bullet connection’s life.</p>
+<h2>Types</h2>
+<ul>
+<li><p>active </p>
+<ul>
+<li><code class="inline">:once</code> - xhr long polling (eg. ajax) 
+</li>
+<li><code class="inline">true</code> - websocket or eventsouce 
+</li>
+<li><code class="inline">false</code> - POST request (eg. client is sending message)
+</li>
+</ul>
+</li>
+<li><p>transport</p>
+<ul>
+<li><code class="inline">:tcp</code> - should be websocket connnection
+</li>
+</ul>
+</li>
+</ul>
+<h3>To setup cowboy with bullet and this handler, you can use this:</h3>
+<pre><code>
+Dispatch = cowboy_router:compile([
+    {'_', [{&quot;/realtime&quot;, :bullet_handler, handler: Realtime.BulletHandler}]}
+]),
+cowboy:start_http(:my_http_listener, 100, [port: 8080],
+    [env: [dispatch: Dispatch]] 
+
+
+
+</code></pre>
+
+        </div>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#info/3">info(info, req, state)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#init/4">init(transport, req, opts, active)</a></td>
+  
+    <td class="summary_synopsis"><p>Called when new bullet handler connection received</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stream/3">stream(data, req, state)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#terminate/2">terminate(req, state)</a></td>
+  
+    <td class="summary_synopsis"><p>Called when request is closed</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <div id="types_details" class="details_list">
+          <h2>Types <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:req/0">
+    <a href="#t:req/0">req</a> :: :cowboy_req.req
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:transport/0">
+    <a href="#t:transport/0">transport</a> :: {:tcp, :http} | :tcp
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:active/0">
+    <a href="#t:active/0">active</a> :: :once | true | false
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:state/0">
+    <a href="#t:state/0">state</a> :: term
+  </p>
+  
+</div>
+
+        </div>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <div class="detail_header" id="info/3">
+    <span class="signature"><strong>info(info, req, state)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#info/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"></div>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="init/4">
+    <span class="signature"><strong>init(transport, req, opts, active)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#init/4" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>init(<a href="#t:transport/0">transport</a>, <a href="#t:req/0">req</a>, list, <a href="#t:active/0">active</a>) :: {:ok, <a href="#t:req/0">req</a>, <a href="#t:state/0">state</a>} | {:shutdown, <a href="#t:req/0">req</a>, <a href="#t:state/0">state</a>}</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Called when new bullet handler connection received.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="stream/3">
+    <span class="signature"><strong>stream(data, req, state)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#stream/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"></div>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="terminate/2">
+    <span class="signature"><strong>terminate(req, state)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#terminate/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Called when request is closed</p>
+</div>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>
